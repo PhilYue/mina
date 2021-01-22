@@ -2,8 +2,20 @@
 
 # when set to true, this module generates and uploads artifacts from `genesis_ledger.json`
 variable "generate_and_upload_artifacts" {
-  type = bool
+  type    = bool
   default = true
+}
+
+# when set to true, deploy an ingress for the testnet which will proxy graphql requests to services based on paths
+variable "deploy_graphql_ingress" {
+  type    = bool
+  default = false
+}
+
+# AWS Vars
+
+variable "aws_route53_zone_id" {
+  type = string
 }
 
 # K8s Cluster Vars

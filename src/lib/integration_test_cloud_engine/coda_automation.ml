@@ -23,10 +23,12 @@ module Network_config = struct
   [@@deriving to_yojson]
 
   type terraform_config =
-    { generate_and_upload_artifacts: bool
-    ; cluster_name: string
+    { cluster_name: string
     ; cluster_region: string
+    ; aws_route53_zone_id: string
     ; testnet_name: string
+    ; generate_and_upload_artifacts: bool
+    ; deploy_graphql_ingress: bool
     ; k8s_context: string
     ; coda_image: string
     ; coda_agent_image: string
@@ -105,6 +107,7 @@ module Network_config = struct
     let project_id = "o1labs-192920" in
     let cluster_id = "gke_o1labs-192920_us-west1_mina-integration-west1" in
     let cluster_name = "mina-integration-west1" in
+    let aws_route53_zone_id = "/hostedzone/ZJPR9NA6W9M7F" in
     let k8s_context = cluster_id in
     let cluster_region = "us-west1" in
     let seed_zone = "us-west1-a" in
@@ -220,13 +223,15 @@ module Network_config = struct
     ; constraint_constants
     ; genesis_constants
     ; terraform=
-        { generate_and_upload_artifacts= false
-        ; cluster_name
+        { cluster_name
         ; cluster_region
+        ; aws_route53_zone_id
         ; testnet_name
         ; seed_zone
         ; seed_region
         ; k8s_context
+        ; generate_and_upload_artifacts= false
+        ; deploy_graphql_ingress= true
         ; coda_image= images.coda
         ; coda_agent_image= images.user_agent
         ; coda_bots_image= images.bots
